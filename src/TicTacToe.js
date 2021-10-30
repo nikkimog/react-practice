@@ -39,6 +39,13 @@ const TicTacToe = () => {
 		}
 		return true;
 	};
+	const onResetClick = () => {
+		setBoardTiles(["", "", "", "", "", "", "", "", ""]);
+		setStatus("no winner");
+		setPlayerOneTiles([]);
+		setPlayerTwoTiles([]);
+		setPlayer("player one");
+	};
 	const onClick = (e) => {
 		let playerOneTilesWithNew = [...playerOneTiles, Number(e)];
 		console.log("playerOneTilesWithNew", playerOneTilesWithNew);
@@ -46,43 +53,56 @@ const TicTacToe = () => {
 		console.log("playerTwoTIleswithnew", playerTwoTilesWithNew);
 		console.log("boardTiles", boardTiles);
 		console.log("e", e);
-		if (boardTiles[e] !== "") {
-			alert("Sorry, another player has already played here. Try again.");
+		if (
+			status === "the winner is player one" ||
+			status === "the winner is player two"
+		) {
+			alert("Sorry, someone already won. Press reset to play again!");
 		} else {
-			if (player === "player one") {
-				boardTiles.splice(e, 1, "X");
-				setBoardTiles(boardTiles);
-				setPlayer("player two");
-
-				setPlayerOneTiles(playerOneTilesWithNew);
+			if (boardTiles[e] !== "") {
+				alert("Sorry, another player has already played here. Try again.");
 			} else {
-				boardTiles.splice(e, 1, "O");
-				setBoardTiles(boardTiles);
-				setPlayer("player one");
-
-				setPlayerTwoTiles(playerTwoTilesWithNew);
-			}
-			winningBoard.forEach((board) => {
 				if (player === "player one") {
-					if (isValidSubsequence(playerOneTilesWithNew, board)) {
-						console.log("playerOneTilesWIthNew", playerOneTilesWithNew);
-						console.log("board", board);
-						setStatus(`the winner is player one`);
-					}
+					boardTiles.splice(e, 1, "X");
+					setBoardTiles(boardTiles);
+					setPlayer("player two");
+
+					setPlayerOneTiles(playerOneTilesWithNew);
 				} else {
-					if (isValidSubsequence(playerTwoTilesWithNew, board)) {
-						console.log("playerTwoTilesWIthNew", playerTwoTilesWithNew);
-						console.log("board", board);
-						setStatus(`the winner is player two`);
-					}
+					boardTiles.splice(e, 1, "O");
+					setBoardTiles(boardTiles);
+					setPlayer("player one");
+
+					setPlayerTwoTiles(playerTwoTilesWithNew);
 				}
-			});
+				winningBoard.forEach((board) => {
+					if (player === "player one") {
+						if (isValidSubsequence(playerOneTilesWithNew.sort(), board)) {
+							console.log("playerOneTilesWIthNew", playerOneTilesWithNew);
+							console.log("board", board);
+							setStatus(`the winner is player one`);
+						}
+					} else {
+						if (isValidSubsequence(playerTwoTilesWithNew.sort(), board)) {
+							console.log("playerTwoTilesWIthNew", playerTwoTilesWithNew);
+							console.log("board", board);
+							setStatus(`the winner is player two`);
+						}
+					}
+				});
+			}
+		}
+		if (!boardTiles.includes("")) {
+			alert("The game is drawn. Please press reset to play again.");
 		}
 	};
 	return (
 		<div>
 			<div>{status}</div>
 			<div>{player}</div>
+			<button className="button" onClick={onResetClick}>
+				Reset
+			</button>
 			<div className="board">
 				{boardTiles.map((tile, idx) => (
 					<Tile tile={tile} onClick={onClick} key={idx} idx={idx} />

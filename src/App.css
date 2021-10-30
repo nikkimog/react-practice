@@ -49,4 +49,25 @@
 	/* width: 25px;
 	height: 25px; */
 	border: 1px solid black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.tileText {
+	font-size: 20px;
+	color: white;
+}
+
+.playerOne {
+	background-color: blue;
+}
+
+.playerTwo {
+	background-color: red;
+}
+
+.button {
+	background-color: black;
+	color: white;
 }

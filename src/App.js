@@ -7,8 +7,8 @@ import TicTacToe from "./TicTacToe";
 function App() {
 	return (
 		<div className="App">
-			<AddressSearch />
-			<Autocomplete suggestions={["hi", "hello", "ciao"]} />
+			{/* <AddressSearch />
+			<Autocomplete suggestions={["hi", "hello", "ciao"]} /> */}
 			<TicTacToe />
 		</div>
 	);
