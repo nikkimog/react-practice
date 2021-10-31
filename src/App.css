@@ -71,3 +71,16 @@
 	background-color: black;
 	color: white;
 }
+
+/* connect four */
+
+.connectFourBoard {
+	border: 1px solid black;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+	height: 500px;
+}
+
+.connectFourTile {
+	border: 1px solid black;
+}
